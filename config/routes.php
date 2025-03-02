@@ -8,9 +8,9 @@ return [
         'icon'  => 'bi bi-grid-1x2',
         'route' => 'dashboard',
     ],
-    'table' => [
-        'name'  => 'table',
-        'title' => 'Table',
+    'report' => [
+        'name'  => 'report',
+        'title' => 'Shift Report',
         'icon'  => 'bi bi-table',
         'route' => 'table',
     ],

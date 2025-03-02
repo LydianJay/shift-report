@@ -36,14 +36,14 @@
         <!-- Icons -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <!--   Core JS Files   -->
-        <script src="{{ asset('vendor/creative-tim/js/js/core/popper.min.js') }}"></script>
-        <script src="{{ asset('vendor/creative-tim/js/js/core/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('vendor/creative-tim/js/js/plugins/perfect-scrollbar.min.js') }}"></script>
-        <script src="{{ asset('vendor/creative-tim/js/js/plugins/smooth-scrollbar.min.js') }}"></script>
-        <script src="{{ asset('vendor/creative-tim/js/js/plugins/chartjs.min.js') }}"></script>
-        <script src="{{ asset('vendor/creative-tim/js/js/plugins/swiper-bundle.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('vendor/creative-tim/js/core/popper.min.js') }}"></script>
+        <script src="{{ asset('vendor/creative-tim/js/core/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('vendor/creative-tim/js/plugins/perfect-scrollbar.min.js') }}"></script>
+        <script src="{{ asset('vendor/creative-tim/js/plugins/smooth-scrollbar.min.js') }}"></script>
+        <script src="{{ asset('vendor/creative-tim/js/plugins/chartjs.min.js') }}"></script>
+        <script src="{{ asset('vendor/creative-tim/js/plugins/swiper-bundle.min.js') }}" type="text/javascript"></script>
         <!-- Control Center for Corporate UI Dashboard: parallax effects, scripts for the example pages etc -->
-        <script src="{{ asset('vendor/creative-tim/js/js/corporate-ui-dashboard.min.js?v=1.0.0') }}"></script>
+        <script src="{{ asset('vendor/creative-tim/js/corporate-ui-dashboard.min.js?v=1.0.0') }}"></script>
     </head>
     <body class="g-sidenav-show  bg-gray-100">
         <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 bg-slate-900 fixed-start " id="sidenav-main">
@@ -73,11 +73,11 @@
         </aside>
         <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
             <!-- Navbar -->
-            <nav class="navbar navbar-main navbar-expand-lg mx-5 px-0 shadow-none rounded" id="navbarBlur" navbar-scroll="true">
+            <nav class="navbar navbar-main navbar-expand-lg mx-5 px-0 shadow-none rounded mb-3" id="navbarBlur" navbar-scroll="true">
                 <div class="container-fluid py-1 px-2">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb bg-transparent mb-1 pb-0 pt-1 px-0 me-sm-6 me-5">
-                            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Dashboard</a></li>
+                            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
                             <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Dashboard</li>
                         </ol>
                         <h6 class="font-weight-bold mb-0">Dashboard</h6>
@@ -87,7 +87,7 @@
                 </div>
             </nav>
 
-             
+             {{ $slot }}
             <!-- End Navbar -->
             <div class="container-fluid py-4 px-5">
                 <footer class="footer pt-3  ">
@@ -99,8 +99,8 @@
                                     © <script>
                                         document.write(new Date().getFullYear())
                                     </script>
-                                    Corporate UI by
-                                    <a href="https://github.com/LydianJay" class="text-secondary" target="_blank">{{ config('constants.site-owner') }}</a>.
+                                    
+                                    <a href="https://github.com/LydianJay" class="text-secondary" target="_blank"> <span class="text-bold text-dark"> {{ config('constants.site-owner') }} </span> </a>
                                 </div>
                             </div>
                             
