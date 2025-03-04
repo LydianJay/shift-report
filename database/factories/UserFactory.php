@@ -24,7 +24,11 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
+            'fname' => fake()->firstName(),
+            'lname' => fake()->lastName(),
+            'mname' => fake()->lastName(),
+            'dob' => now(),
+            'position' => fake()->numberBetween(0, 3),
             'password' => static::$password ??= Hash::make('password'),
         ];
     }
@@ -32,10 +36,14 @@ class UserFactory extends Factory
    
 
 
-    public function createAdmin($name, $pass)
+    public function createAdmin($fname, $mname, $lname, $pos, $pass)
     {
         return $this->state([
-            'name' => $name,
+            'fname' => $fname,
+            'mname' => $mname,
+            'lname' => $lname,
+            'dob' => now(),
+            'position' => $pos,
             'password' => Hash::make($pass),
         ]);
     }

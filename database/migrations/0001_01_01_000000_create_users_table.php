@@ -13,9 +13,13 @@ return new class extends Migration
     {
         Schema::create('employee', function (Blueprint $table) {
             $table->id()->primary();
-            $table->string('name');
+            $table->string('fname');
+            $table->string('mname');
+            $table->string('lname');
+            $table->date('dob');
             $table->string('password');
-            $table->tinyInteger('level')->default(1);
+            
+            $table->tinyInteger('position')->default(3);
         });
 
 

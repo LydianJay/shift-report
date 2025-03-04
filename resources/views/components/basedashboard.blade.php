@@ -12,6 +12,9 @@
     
     * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
     -->
+
+@props(['active_link'])
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -130,6 +133,14 @@
             .card {
                 background-color: #063969 !important;
             }
+
+            .card-header {
+                background-color: #063969 !important;
+                color: #fff !important;
+            }
+            p {
+                color: #fff !important;
+            }
         </style>
 
     </head>
@@ -145,8 +156,8 @@
                 <ul class="navbar-nav">
                     @foreach( config('routes') as $d)
 
-                        <li class="nav-item my-1 border border-secondary border-radius-md ">
-                            <a class="nav-link active" href="../pages/dashboard.html">
+                        <li class="nav-item my-1 border-bottom border-top border-radius-md ">
+                            <a class="nav-link {{ strcmp($active_link, $d['name']) == 0 ? 'active' : '' }}" href="../pages/dashboard.html">
                                 <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                                     <i class="{{$d['icon']}} fs-5 opacity-10 text-dark"></i>
                                 </div>
@@ -166,9 +177,9 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb bg-transparent mb-1 pb-0 pt-1 px-0 me-sm-6 me-5">
                             <li class="breadcrumb-item text-sm "><a class="opacity-5 text-white " href="javascript:;">Pages</a></li>
-                            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Dashboard</li>
+                            <li class="breadcrumb-item text-sm text-white active" aria-current="page">{{ config('routes')[$active_link]['title'] }}</li>
                         </ol>
-                        <h6 class="font-weight-bold mb-0 text-white">Dashboard</h6>
+                        <h6 class="font-weight-bold mb-0 text-white">{{ config('routes')[$active_link]['title'] }}</h6>
                     </nav>
                     <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                     </div>

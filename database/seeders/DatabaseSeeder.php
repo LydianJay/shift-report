@@ -13,8 +13,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        User::factory()->createAdmin('Lloyd Jay', 'Arpilleda', 'Edradan', 0, 'admin123')->create();
 
-       User::factory()->createAdmin('admin', 'admin123')->create();
+        User::factory(10)->create();
+
     }
 }
