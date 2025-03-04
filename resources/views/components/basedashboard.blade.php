@@ -116,11 +116,19 @@
                 --bs-link-hover-color: #522aaa;
                 --bs-code-color: #d63384;
                 --bs-highlight-bg: #fcf8e3;
-                }
+            }
 
+            .bg-gray-100 {
+                background-color: #0c1f35 !important;
+            }
             .body {
                 
                 background-color: var(--bs-body-bg)
+            }
+
+
+            .card {
+                background-color: #063969 !important;
             }
         </style>
 
@@ -151,16 +159,16 @@
                 
             </div>
         </aside>
-        <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg bg-dark text-white">
+        <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg text-white">
             <!-- Navbar -->
             <nav class="navbar navbar-main navbar-expand-lg mx-5 px-0 shadow-none rounded mb-3" id="navbarBlur" navbar-scroll="true">
                 <div class="container-fluid py-1 px-2">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb bg-transparent mb-1 pb-0 pt-1 px-0 me-sm-6 me-5">
-                            <li class="breadcrumb-item text-sm"><a class="opacity-5 " href="javascript:;">Pages</a></li>
-                            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Dashboard</li>
+                            <li class="breadcrumb-item text-sm "><a class="opacity-5 text-white " href="javascript:;">Pages</a></li>
+                            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Dashboard</li>
                         </ol>
-                        <h6 class="font-weight-bold mb-0">Dashboard</h6>
+                        <h6 class="font-weight-bold mb-0 text-white">Dashboard</h6>
                     </nav>
                     <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                     </div>
@@ -174,13 +182,13 @@
                     <div class="container-fluid">
                         <div class="row align-items-center justify-content-lg-between">
                             <div class="col-lg-6 mb-lg-0 mb-4">
-                                <div class="copyright text-center text-xs text-muted text-lg-start">
+                                <div class="copyright text-white text-center text-xs text-muted text-lg-start">
                                     Copyright
                                     © <script>
                                         document.write(new Date().getFullYear())
                                     </script>
                                     
-                                    <a href="https://github.com/LydianJay" class="text-secondary" target="_blank"> <span class="text-bold text-dark"> {{ config('constants.site-owner') }} </span> </a>
+                                    <a href="https://github.com/LydianJay" class="text-secondary" target="_blank"> <span class="text-bold text-white"> {{ config('constants.site-owner') }} </span> </a>
                                 </div>
                             </div>
                             

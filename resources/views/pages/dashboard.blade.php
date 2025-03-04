@@ -6,7 +6,7 @@
             <div class="col-md-12 border-bottom mb-2">
                 <div class="d-md-flex align-items-center mb-3 mx-2">
                     <div class="mb-md-0 mb-3">
-                        <h3 class="font-weight-bold mb-0">LC BPO</h3>
+                        <h3 class="font-weight-bold  text-white mb-0">LC BPO</h3>
                         <p class="mb-0">Today is <script>document.write(new Date())</script></p>
                     </div>
                 </div>
@@ -81,10 +81,9 @@
     <div class="container-fluid my-5">
         <div class="row">
             
-            <div class="col-lg-3 ">
-                <h3 class="font-weight-bold mb-3">Employee on duty</h3>
+            <div class="col-lg-3">
+                <h3 class="font-weight-bold mb-3 text-white">Employee on duty</h3>
                 <div class="card">
-                    <span class="mask bg-gray-800 opacity-10 border-radius-lg"></span>
                     
                     <div class="card-body px-3 position-relative">
                         <div class="row">
@@ -107,7 +106,7 @@
                 <div class="card">
                     <div class="card-body px-3 position-relative">
                         <div class="chart mb-2">
-                            <canvas id="chart-bars" class="chart-canvas" height="240"> </canvas>
+                            <canvas id="chart-bars" class="chart-canvas" height="240" width="auto"> </canvas>
                         </div>
                     </div>
                 </div>
