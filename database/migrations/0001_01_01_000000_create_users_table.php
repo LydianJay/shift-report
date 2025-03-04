@@ -16,6 +16,9 @@ return new class extends Migration
             $table->string('fname');
             $table->string('mname');
             $table->string('lname');
+
+            $table->string('email');
+            $table->string('contactno');
             $table->date('dob');
             $table->string('password');
             

@@ -13,7 +13,7 @@ return [
         'name'      => 'report',
         'title'     => 'Shift Report',
         'icon'      => 'bi bi-table',
-        'route'     => 'table',
+        'route'     => 'dashboard',
         'auth_lvl'  => 2,
     ],
     'employee' => [

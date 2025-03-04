@@ -27,6 +27,8 @@ class UserFactory extends Factory
             'fname' => fake()->firstName(),
             'lname' => fake()->lastName(),
             'mname' => fake()->lastName(),
+            'email' => fake()->unique()->safeEmail(),
+            'contactno' => fake()->phoneNumber(),
             'dob' => now(),
             'position' => fake()->numberBetween(0, 3),
             'password' => static::$password ??= Hash::make('password'),
@@ -43,6 +45,8 @@ class UserFactory extends Factory
             'mname' => $mname,
             'lname' => $lname,
             'dob' => now(),
+            'email' => fake()->unique()->safeEmail(),
+            'contactno' => fake()->phoneNumber(),
             'position' => $pos,
             'password' => Hash::make($pass),
         ]);

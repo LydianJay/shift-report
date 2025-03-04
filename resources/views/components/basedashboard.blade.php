@@ -157,7 +157,7 @@
                     @foreach( config('routes') as $d)
 
                         <li class="nav-item my-1 border-bottom border-top border-radius-md ">
-                            <a class="nav-link {{ strcmp($active_link, $d['name']) == 0 ? 'active' : '' }}" href="../pages/dashboard.html">
+                            <a class="nav-link {{ strcmp($active_link, $d['name']) == 0 ? 'active' : '' }}" href="{{ route($d['route']) }}">
                                 <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                                     <i class="{{$d['icon']}} fs-5 opacity-10 text-dark"></i>
                                 </div>

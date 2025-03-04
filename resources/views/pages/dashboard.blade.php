@@ -1,4 +1,4 @@
-<x-basedashboard>
+<x-basedashboard active_link="{{$active_link}}">
 
     <div class="container-fluid">
         <div class="row">
