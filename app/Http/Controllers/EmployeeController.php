@@ -54,4 +54,48 @@ class EmployeeController extends Controller
 
         return view('pages.employee.edit', ['active_link' => 'employee', 'employee' => $employee]);
     }
+
+    public function update(Request $request, $id) {
+        $request->validate([
+            'fname' => 'required',
+            'lname' => 'required',
+            'mname' => 'required',
+            'email' => 'required',
+            'contactno' => 'required',
+            'dob' => 'required',
+            'position' => 'required',
+        ]);
+
+        $employee = User::find($id);
+        $employee->fname = $request->fname;
+        $employee->lname = $request->lname;
+        $employee->mname = $request->mname;
+        $employee->email = $request->email;
+        $employee->contactno = $request->contactno;
+        $employee->dob = $request->dob;
+        $employee->position = $request->position;
+        $employee->save();
+
+        return redirect()->route('employee')->with('success', 'Update Success');
+    }
+
+    public function destroy($id) {
+        $employee = User::find($id);
+        $employee->delete();
+
+        return redirect()->route('employee')->with('success', 'Employee deleted successfully');
+    }
+
+    public function search(Request $request) {
+
+        $name = request('name');
+
+        $employee = User::where('fname', 'like', '%' . $name . '%')
+                        ->orWhere('lname', 'like', '%' . $name . '%')
+                        ->orWhere('mname', 'like', '%' . $name . '%')
+                        ->get();
+
+        
+        return view('pages.employee.view', ['active_link' => 'employee', 'employees' => $employee]);
+    }
 }

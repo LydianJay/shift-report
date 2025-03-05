@@ -46,7 +46,7 @@
         <script src="{{ asset('vendor/creative-tim/js/plugins/chartjs.min.js') }}"></script>
         <script src="{{ asset('vendor/creative-tim/js/plugins/swiper-bundle.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('vendor/creative-tim/js/corporate-ui-dashboard.min.js?v=1.0.0') }}"></script>
-
+       
         <style>
 
             :root {
@@ -149,7 +149,6 @@
 
             .clickable-row:hover {
                 background-color: #0053b3;
-                border-radius: 55px;
             }
 
         </style>
