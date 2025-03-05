@@ -100,7 +100,7 @@
      
     @endif
     
-    @if(session('success'))
+    @if(session('error'))
 
         <!-- Modal -->
         <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">

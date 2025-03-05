@@ -3,7 +3,7 @@
     <div class="container-fluid">
         <div class="row">
 
-            <div class="col-md-12 border-bottom mb-2">
+            <div class="col-md-12 mb-2">
                 <div class="d-md-flex align-items-center mb-3 mx-2">
                     <div class="mb-md-0 mb-3">
                         <h3 class="font-weight-bold  text-white mb-0">LC BPO</h3>

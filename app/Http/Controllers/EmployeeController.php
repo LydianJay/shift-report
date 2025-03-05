@@ -88,7 +88,7 @@ class EmployeeController extends Controller
 
     public function search(Request $request) {
 
-        $name = request('name');
+        $name = $request->get('name');
 
         $employee = User::where('fname', 'like', '%' . $name . '%')
                         ->orWhere('lname', 'like', '%' . $name . '%')

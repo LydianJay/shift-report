@@ -12,9 +12,6 @@
     
     * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
     -->
-
-@props(['active_link'])
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -46,7 +43,7 @@
         <script src="{{ asset('vendor/creative-tim/js/plugins/chartjs.min.js') }}"></script>
         <script src="{{ asset('vendor/creative-tim/js/plugins/swiper-bundle.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('vendor/creative-tim/js/corporate-ui-dashboard.min.js?v=1.0.0') }}"></script>
-       
+        
         <style>
 
             :root {
@@ -103,7 +100,7 @@
                 --bs-body-line-height: 1.5;
                 --bs-body-color: #64748b;
                 
-                --bs-body-bg: #12101b;
+                --bs-body-bg: #2e4768;
                 --bs-border-width: 1px;
                 --bs-border-style: solid;
                 --bs-border-color: #dde0e5;
@@ -121,9 +118,7 @@
                 --bs-highlight-bg: #fcf8e3;
             }
 
-            .bg-gray-100 {
-                background-color: #0c1f35 !important;
-            }
+           
             .body {
                 
                 background-color: var(--bs-body-bg)
@@ -154,83 +149,96 @@
             .navbar-vertical .navbar-nav>.nav-item .nav-link.active {
                 background-color: #1c487a;
             }
+            
 
         </style>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                console.log('DOMContentLoaded');
+
+                let errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+                    errorModal.show();
+
+                console.log('errorModal');
+
+            });
+            
+
+        </script>
 
     </head>
-    <body class="g-sidenav-show  bg-gray-100">
-        <aside class="sidenav navbar navbar-vertical navbar-expand-xs  bg-slate-900 fixed-start rounded border-end border-1 border-secondary" id="sidenav-main">
-            <div class="sidenav-header">
-                <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
-                <a class="navbar-brand d-flex align-items-center m-0" href="#" target="_blank">
-                <span class="font-weight-bold text-lg">{{ config('constants.title') }}</span>
-                </a>
-            </div>
-            <div class="collapse navbar-collapse px-4  w-auto " id="sidenav-collapse-main">
-                <ul class="navbar-nav">
-                    @foreach( config('routes') as $d)
-
-                        <li class="nav-item my-1 border border-radius-md">
-                            <a class="nav-link {{ strcmp($active_link, $d['name']) == 0 ? 'active' : '' }}" href="{{ route($d['route']) }}">
-                                <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                                    <i class="{{$d['icon']}} fs-5 opacity-10 text-dark"></i>
+    <body class="">
+        <main class="main-content  mt-0">
+            <section>
+                <div class="page-header min-vh-100">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xl-4 col-md-6 d-flex flex-column mx-auto">
+                                <div class="card mt-8">
+                                    <div class="card-header pb-0 text-left bg-transparent">
+                                        <h3 class="font-weight-black text-white display-6">Welcome back</h3>
+                                        <p class="mb-0">Welcome back! Please enter your details.</p>
+                                    </div>
+                                    <div class="card-body">
+                                        <form action="{{ route('login') }}" method="post">
+                                            @csrf
+                                            <label class="text-white opacity-8">Email Address</label>
+                                            <div class="mb-3">
+                                                <input type="email" name="email" class="form-control" placeholder="Enter your email address" aria-label="Email" aria-describedby="email-addon">
+                                            </div>
+                                            <label class="text-white opacity-8">Password</label>
+                                            <div class="mb-3">
+                                                <input type="password" name="password" class="form-control" placeholder="Enter password" aria-label="Password" aria-describedby="password-addon">
+                                            </div>
+                                            <div class="d-flex flex-row justify-content-center">
+                                                <button type="submit" class="btn btn-primary">Sign In</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="card-footer text-center pt-0 px-lg-2 px-1">
+                                        <p class="mb-4 text-xs mx-auto">
+                                            Don't have an account?
+                                            <span class="text-danger fw-bold fs-10">Please contact system administrator</span>
+                                        </p>
+                                    </div>
                                 </div>
-                                <span class="nav-link-text text-wrap">{{$d['title']}}</span>
-                            </a>
-                        </li>
-                    
-                    @endforeach
-                </ul>
-                
-            </div>
-        </aside>
-        <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg text-white">
-            <!-- Navbar -->
-            <nav class="navbar navbar-main navbar-expand-lg px-3 shadow-none border-bottom mb-3" id="navbarBlur" navbar-scroll="true">
-                <div class="container-fluid py-1 px-2">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb bg-transparent mb-1 pb-0 pt-1 px-0 me-sm-6 me-5">
-                            <li class="breadcrumb-item text-sm "><a class="opacity-5 text-white " href="javascript:;">Pages</a></li>
-                            <li class="breadcrumb-item text-sm text-white active" aria-current="page">{{ config('routes')[$active_link]['title'] }}</li>
-                        </ol>
-                        <h6 class="font-weight-bold mb-0 text-white">{{ config('routes')[$active_link]['title'] }}</h6>
-                    </nav>
-                    <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-                        <div class="ms-md-auto d-flex align-items-center">
-                            <ul class="navbar-nav justify-content-end">
-                                <li class="nav-item d-flex align-items-center">
-                                    <a href="{{ route('logout') }}" class="nav-link text-white font-weight-bold px-0">
-                                        <i class="bi bi-gear opacity-7 fs-7 text-white me-2"></i>
-                                        <span class="fs-7">Logout</span>
-                                    </a>
-                                </li>
-                            </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="position-absolute w-40 top-0 end-0 h-100 d-md-block d-none">
+                                    <div class="oblique-image position-absolute fixed-top ms-auto h-100 z-index-0 bg-cover ms-n8" style="background-image:url('{{ asset('assets/img/login-bg.jpg') }}')  ">
+                                        <div class="blur mt-12 p-4 text-center border border-white border-radius-md position-absolute fixed-bottom m-4">
+                                            <h2 class="mt-3 text-dark font-weight-bold">Welcome to LC BPO</h2>
+                                            <h6 class="text-dark text-sm mt-2">Optimizing Business Operations, Enhancing Customer Experience</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </nav>
+            </section>
+            @if(session('error'))
 
-             {{ $slot }}
-            <!-- End Navbar -->
-            <div class="container-fluid py-4 px-5">
-                <footer class="footer pt-3  ">
-                    <div class="container-fluid">
-                        <div class="row align-items-center justify-content-lg-between">
-                            <div class="col-lg-6 mb-lg-0 mb-4">
-                                <div class="copyright text-white text-center text-xs text-muted text-lg-start">
-                                    Copyright
-                                    © <script>
-                                        document.write(new Date().getFullYear())
-                                    </script>
-                                    
-                                    <a href="https://github.com/LydianJay" class="text-secondary" target="_blank"> <span class="text-bold text-white"> {{ config('constants.site-owner') }} </span> </a>
-                                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-danger" id="errorModalLabel">Error</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            
+                            <div class="modal-body">
+                                <p class="fs-5 text-dark fw-bold"> {{ session('error') }} </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                            </div>
                         </div>
                     </div>
-                </footer>
-            </div>
+                </div>
+
+            
+            @endif
         </main>
     </body>
 </html>
