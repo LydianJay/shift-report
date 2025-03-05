@@ -26,16 +26,16 @@
                                 <th class="fw-bold text-white">Name</th>
                                 <th class="fw-bold text-white">Date of Birth</th>
                                 <th class="fw-bold text-white">Position</th>
-                                <th class="fw-bold text-white">Authentication Level</th>
+                                <th class="fw-bold text-white">Access Level</th>
                             </tr>
                         </thead>
                         @foreach($employees as $employee)
-                        <tr>
-                            <td class="text-white" >{{$employee->fname . ' ' . $employee->mname . ' ' . $employee->lname}}</td>
-                            <td class="text-white">{{$employee->dob}}</td>
-                            <td class="text-white">{{config('positions')[$employee->position]['title'] }}</td>
-                            <td class="text-white">{{config('positions')[$employee->position]['lvl']}}</td>
-                        </tr>
+                            <tr class="clickable-row" data-href="{{ route('employee_edit', ['id' => $employee->id]) }}">
+                                <td class="text-white">{{$employee->fname . ' ' . $employee->mname . ' ' . $employee->lname}}</td>
+                                <td class="text-white">{{$employee->dob}}</td>
+                                <td class="text-white">{{config('positions')[$employee->position]['title'] }}</td>
+                                <td class="text-white">{{config('positions')[$employee->position]['lvl']}}</td>
+                            </tr>
                         @endforeach
                     </table>
                 </div>
@@ -49,4 +49,15 @@
 
     
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const rows = document.querySelectorAll('.clickable-row');
+            rows.forEach(row => {
+                row.addEventListener('click', () => {
+                    window.location.href = row.dataset.href;
+                });
+            });
+        });
+    </script>
 </x-basedashboard>

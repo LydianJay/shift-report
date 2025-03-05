@@ -47,4 +47,11 @@ class EmployeeController extends Controller
 
         return redirect()->route('employee_create')->with('success', 'Employee created successfully');
     }
+
+
+    public function edit($id) {
+        $employee = User::find($id);
+
+        return view('pages.employee.edit', ['active_link' => 'employee', 'employee' => $employee]);
+    }
 }

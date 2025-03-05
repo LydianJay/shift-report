@@ -141,6 +141,17 @@
             p {
                 color: #fff !important;
             }
+
+            .clickable-row {
+                cursor: pointer;
+                color: #fff;
+            }
+
+            .clickable-row:hover {
+                background-color: #0053b3;
+                border-radius: 55px;
+            }
+
         </style>
 
     </head>
