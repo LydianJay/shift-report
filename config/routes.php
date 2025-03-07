@@ -9,11 +9,11 @@ return [
         'route'     => 'dashboard',
         'auth_lvl'  => 2,
     ],
-    'report' => [
-        'name'      => 'report',
-        'title'     => 'Shift Report',
+    'transactions' => [
+        'name'      => 'transactions',
+        'title'     => 'Transactions',
         'icon'      => 'bi bi-table',
-        'route'     => 'dashboard',
+        'route'     => 'transactions',
         'auth_lvl'  => 2,
     ],
     'employee' => [

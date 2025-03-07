@@ -47,7 +47,14 @@ return new class extends Migration
             $table->foreign('merchant_id')->references('merchant_id')->on('merchant')->onDelete('cascade');
         });
 
-       
+        Schema::create('transactions', function (Blueprint $table) {
+            $table->bigIncrements('tr_id')->primary();
+            $table->bigInteger('upi_rrn');
+            $table->float('amount');
+            $table->timestamp('created_at')->useCurrent();
+        });
+
+
 
         Schema::create('sessions', function (Blueprint $table) {
             $table->string('id')->primary();

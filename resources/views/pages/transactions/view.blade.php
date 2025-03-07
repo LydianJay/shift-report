@@ -1,16 +1,13 @@
 <x-basedashboard active_link="{{$active_link}}">
-    <div class="container-fluid">
-        
+
+
         <div class="card">
            
-            
-
-
             <div class="card-header border-3 border-white border-bottom mx-2 px-0" style="--bs-border-opacity: .5;">
                 <div class="container-fluid d-flex flex-row justify-content-between align-items-center">
-                    <p class="fw-bold fs-3">Employees</p>
+                    <p class="fw-bold fs-3">Transactions</p>
                 
-                    <form action="{{ route('employee_search') }}" method="get">
+                    <form action="" method="get">
                         <div class="input-group mb-3 mx-5 pe-5">
                             <span class="input-group-text text-body">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -29,39 +26,61 @@
                     </form>
                         
                 </div>
+                <div class="container-fluid d-flex flex-row justify-content-start">
+                    <form action="{{ route('transactions_upload') }}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <label class="text-white opacity-8 me-1 my-0">Bank file statement <span class="opacity-5 ms-5">max size 64MB</span></label>
+                        <div class="input-group m-0 p-0  align-items-center">
+                            <input type="file" name="file" class="form-control">
+                            <button type="submit" class="btn btn-primary m-0"><span> <i class="bi bi-upload ms-1 me-2"></i> </span>Upload</button>
+                        </div>
+                    </form>
+                </div>
             </div>
             <div class="card-body px-2">
                 <div class="p-0 table-responsive">
                     <table class="table text-center justify-content-center">
                         <thead>
                             <tr>
-                                <th class="fw-bold text-white">Name</th>
-                                <th class="fw-bold text-white">Date of Birth</th>
-                                <th class="fw-bold text-white">Position</th>
-                                <th class="fw-bold text-white">Access Level</th>
+                                @foreach($table_title as $title)
+                                    <th class="fw-bold text-white">{{$title}}</th>
+                                @endforeach
                             </tr>
                         </thead>
-                        @foreach($employees as $employee)
-                            <tr class="clickable-row" data-href="{{ route('employee_edit', ['id' => $employee->id]) }}">
-                                <td class="text-white">{{$employee->fname . ' ' . $employee->mname . ' ' . $employee->lname}}</td>
-                                <td class="text-white">{{$employee->dob}}</td>
-                                <td class="text-white">{{config('positions')[$employee->position]['title'] }}</td>
-                                <td class="text-white">{{config('positions')[$employee->position]['lvl']}}</td>
-                            </tr>
-                        @endforeach
+                        <tbody>
+                            @foreach($data as $d)
+                                <tr>
+                                    <td class="text-white"> {{ $d->upi_rrn }} </td>
+                                    <td class="text-white"> {{ $d->amount }} </td>
+                                    <td class="text-white"> {{ $d->created_at }} </td>
+                                </tr>
+                            @endforeach
+
+                        </tbody>
                     </table>
                 </div>
             </div>
-            <div class="card-footer">
-                <div class="container-fluid d-flex flex-row justify-content-end">
-                    <button class="btn btn-primary "><span><a class="text-white" href="{{ route('employee_create') }}">Add Employee</a></span></button>
+            <div class="card-footer border-top border-3 border-white">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col">
+                             <p class="fw-bold fs-7 opacity-7">Page {{ $current_page }} of {{ $count }}</p>
+                        </div>
+                        <div class="col-2">
+                            <div class="container-fluid d-flex flex-row justify-content-between">
+                                <button class="btn btn-outline-white"><span><a href="{{ route('transactions', ['page' => ($current_page-1) ]) }}">Prev</a></span> </button>
+                                <button class="btn btn-outline-white"><span><a href="{{ route('transactions', ['page' => ($current_page+1) ]) }}">Next</a></span></button>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
         </div>
 
         
-        
     </div>
+
 
     @if(session('success'))
         <!-- Modal -->
@@ -109,29 +128,4 @@
      
     @endif
 
-
-
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('Loaded');
-            const rows = document.querySelectorAll('.clickable-row');
-            rows.forEach(row => {
-                row.addEventListener('click', () => {
-                    window.location.href = row.dataset.href;
-                });
-            });
-
-            let successModal = new bootstrap.Modal(document.getElementById('successModal'));
-                successModal.show();
-
-            let errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
-                errorModal.show();
-
-            console.log('errorModal');
-
-        });
-        
-
-    </script>
 </x-basedashboard>
