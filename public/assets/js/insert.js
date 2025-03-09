@@ -1,3 +1,4 @@
+
 function handleFile(route) {
     const input = document.getElementById("file");
     
@@ -37,27 +38,35 @@ function handleFile(route) {
     reader.readAsText(file);
 }
 
-function sendInChunks(data, route, chunkSize = 25 ) {
-    let modalVal = document.getElementById("progbar");
+async function sendInChunks(data, route, chunkSize = 10 ) {
 
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
     let index = 0;
     console.log('Sending chunks');
-    while(index < data.length){
-        modalVal.style.width = "0%";
+    while(index < data.length) {
         const chunk = data.slice(index, index + chunkSize);
-        
         try {
-            fetch(route, {
+            await fetch(route, {
                 method: "POST",
-                headers: { "Content-Type": "application/json", "Accept": "application/json", "X-CSRF-TOKEN": csrfToken },
-                body: JSON.stringify({ transactions: chunk }),
-            }).then(() => {
-                index += chunkSize;
-                let progress = Math.round((index / data.length) * 100);
-                modalVal.style.width = `${progress}%`;
-            }).catch(err => console.error("Upload failed", err));
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "X-CSRF-TOKEN": csrfToken
+                },
+                body: JSON.stringify({ transactions: chunk }) 
+            });
+
+
+            index += chunkSize;
+            let progress = Math.round((index / data.length) * 100);
+            document.getElementById("progbar").style.width = `${progress}%`;
+
+            if(progress >= 100) {
+                let myModal = bootstrap.Modal.getInstance(document.getElementById('uploadmodal'));
+                myModal.hide();
+                alert(`Upload completed! ${data.length} transactions uploaded`);
+            }
             
         }
         catch(err) {
