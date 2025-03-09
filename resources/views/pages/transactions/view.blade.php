@@ -1,5 +1,5 @@
 <x-basedashboard active_link="{{$active_link}}">
-
+        <script src="{{ asset('assets/js/insert.js') }}"> </script>
 
         <div class="card">
            
@@ -26,15 +26,17 @@
                     </form>
                         
                 </div>
-                <div class="container-fluid d-flex flex-row justify-content-start">
-                    <form action="{{ route('transactions_upload') }}" method="post" enctype="multipart/form-data">
-                        @csrf
-                        <label class="text-white opacity-8 me-1 my-0">Bank file statement <span class="opacity-5 ms-5">max size 64MB</span></label>
-                        <div class="input-group m-0 p-0  align-items-center">
-                            <input type="file" name="file" class="form-control">
-                            <button type="submit" class="btn btn-primary m-0"><span> <i class="bi bi-upload ms-1 me-2"></i> </span>Upload</button>
+                <div class="container-fluid d-flex flex-column justify-content-start">
+                    <div class="row">
+                        <div class="col-4">
+                            <label class="text-white opacity-8 me-1 my-0">Bank file statement <span class="opacity-5 ms-5">max size 64MB</span></label>
+                            <div class="input-group m-0 p-0  align-items-center">
+                                <input type="file" name="file" id="file" class="form-control">
+                                <button type="button" class="btn btn-primary m-0" data-bs-toggle="modal" data-bs-target="#uploadmodal" onclick="handleFile('{{ route('transactions_upload') }}')"><span> <i class="bi bi-upload ms-1 me-2"></i> </span>Upload</button>
+                            </div>
                         </div>
-                    </form>
+                    </div>
+                    
                 </div>
             </div>
             <div class="card-body px-2">
@@ -68,8 +70,8 @@
                         </div>
                         <div class="col-2">
                             <div class="container-fluid d-flex flex-row justify-content-between">
-                                <button class="btn btn-outline-white"><span><a href="{{ route('transactions', ['page' => ($current_page-1) ]) }}">Prev</a></span> </button>
-                                <button class="btn btn-outline-white"><span><a href="{{ route('transactions', ['page' => ($current_page+1) ]) }}">Next</a></span></button>
+                                <button class="btn btn-outline-white"><span><a class="text-white" href="{{ route('transactions', ['page' => ($current_page-1) ]) }}">Prev</a></span> </button>
+                                <button class="btn btn-outline-white"><span><a class="text-white" href="{{ route('transactions', ['page' => ($current_page+1) ]) }}">Next</a></span></button>
                             </div>
                         </div>
                     </div>
@@ -127,5 +129,25 @@
 
      
     @endif
+
+
+    <div class="modal fade" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" id="uploadmodal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Uploading Bank Statement</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" id="progbar" role="progressbar" aria-label="Progress" style="width: 2%"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 </x-basedashboard>
