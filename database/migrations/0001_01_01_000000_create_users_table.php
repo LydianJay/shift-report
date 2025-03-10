@@ -50,8 +50,12 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->bigIncrements('tr_id')->primary();
             $table->bigInteger('upi_rrn');
-            $table->float('amount');
+            $table->float('ammount');
+            $table->tinyInteger('iscredit')->default(1);
+            $table->unsignedBigInteger('upload_by')->nullable();
             $table->timestamp('created_at')->useCurrent();
+            
+            $table->foreign('upload_by')->references('id')->on('employee');
         });
 
 

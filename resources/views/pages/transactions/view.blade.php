@@ -51,9 +51,10 @@
                         </thead>
                         <tbody>
                             @foreach($data as $d)
-                                <tr>
+                                <tr class="{{ $d->iscredit == 1 ? 'bg-primary' : 'bg-secondary' }} border">
                                     <td class="text-white"> {{ $d->upi_rrn }} </td>
-                                    <td class="text-white"> {{ $d->amount }} </td>
+                                    <td class="text-white"> {{ $d->ammount }} </td>
+                                    <td class="text-white"> {{ $d->iscredit == 1 ? 'Credit' : 'Debit' }} </td>
                                     <td class="text-white"> {{ $d->created_at }} </td>
                                 </tr>
                             @endforeach

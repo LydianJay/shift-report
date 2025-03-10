@@ -15,7 +15,9 @@ class TransactionModel extends Model
     protected $fillable = [
         'tr_id',
         'upi_rrn',
-        'amount',
+        'debit',
+        'credit',
+        'upload_by',
         'created_at',
     ];
 }
