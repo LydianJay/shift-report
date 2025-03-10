@@ -11,7 +11,7 @@ async function hashDetails(details) {
 
 async function handleFile(route) {
     const input = document.getElementById("file");
-
+    const userid = document.querySelector('meta[name="user_id"]').getAttribute('content');
     if (!input.files.length) {
         alert("Please select a file");
         return;
@@ -62,7 +62,7 @@ async function handleFile(route) {
                     
                 }
                 if(ok) {
-                    transactions.push({ upi_rrn: upi_rrn, ammount: ammount,  iscredit: iscredit });
+                    transactions.push({ upi_rrn: upi_rrn, ammount: ammount, iscredit: iscredit, upload_by: userid });
                 }
             }
 
@@ -70,8 +70,7 @@ async function handleFile(route) {
         }
         console.log(transactions);
 
-        // console.log(transactions.length);
-        // console.log(transactions);
+
         sendInChunks(transactions, route);
     };
 

@@ -21,6 +21,7 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="user_id" content="{{ Auth::id() }}">
         <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('vendor/creative-tim/img/apple-icon.png') }}">
         <link rel="icon" type="image/png" href="{{ asset('vendor/creative-tim/img/favicon.png') }}">
         <title>

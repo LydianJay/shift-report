@@ -15,6 +15,7 @@ class TransactionsController extends Controller
             'Ammount',
             'Type',
             'Date',
+            'Uploaded By',
         ];
         $limit          = 10;
         $data           = null;
@@ -22,10 +23,19 @@ class TransactionsController extends Controller
         $currentPage    = 1;
 
         if($page == null) {
-            $data = TransactionModel::limit($limit)->get();
+            // $data = TransactionModel::limit($limit)->get();
+            $data = TransactionModel::join('employee', 'transactions.upload_by', '=', 'employee.id')
+                ->select('transactions.*', 'employee.fname as fname', 'employee.lname as lname', 'employee.mname as mname')
+                ->limit($limit)
+                ->get();
         }
         else {
-            $data = TransactionModel::limit($limit)->offset($page * $limit)->get();
+            // $data = TransactionModel::limit($limit)->offset($page * $limit)->get();
+            $data = TransactionModel::join('employee', 'transactions.upload_by', '=', 'employee.id')
+                ->select('transactions.*', 'employee.fname as fname', 'employee.lname as lname', 'employee.mname as mname')
+                ->limit($limit)
+                ->offset($page * $limit)
+                ->get();
             $currentPage = $page;
         }
 

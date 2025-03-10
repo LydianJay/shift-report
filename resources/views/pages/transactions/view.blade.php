@@ -6,25 +6,6 @@
             <div class="card-header border-3 border-white border-bottom mx-2 px-0" style="--bs-border-opacity: .5;">
                 <div class="container-fluid d-flex flex-row justify-content-between align-items-center">
                     <p class="fw-bold fs-3">Transactions</p>
-                
-                    <form action="" method="get">
-                        <div class="input-group mb-3 mx-5 pe-5">
-                            <span class="input-group-text text-body">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z">
-                                        
-                                    </path>
-                                </svg>
-                            </span>
-                            <input type="text" class="form-control form-control-sm" name="name" placeholder="Search">
-                        </div>
-
-                        <div class="input-group mb-3 mx-5 pe-5">
-                            <button type="submit" class="btn btn-primary btn-sm">Search</button>
-                        </div>
-
-                    </form>
-                        
                 </div>
                 <div class="container-fluid d-flex flex-column justify-content-start">
                     <div class="row">
@@ -32,7 +13,7 @@
                             <label class="text-white opacity-8 me-1 my-0">Bank file statement <span class="opacity-5 ms-5">max size 64MB</span></label>
                             <div class="input-group m-0 p-0  align-items-center">
                                 <input type="file" name="file" id="file" class="form-control">
-                                <button type="button" class="btn btn-primary m-0" data-bs-toggle="modal" data-bs-target="#uploadmodal" onclick="handleFile('{{ route('transactions_upload') }}')"><span> <i class="bi bi-upload ms-1 me-2"></i> </span>Upload</button>
+                                <button type="button" class="btn btn-primary m-0" data-bs-toggle="modal" data-bs-target="#uploadmodal" onclick="handleFile('{{ route('transactions_upload') }}' )"><span> <i class="bi bi-upload ms-1 me-2"></i> </span>Upload</button>
                             </div>
                         </div>
                     </div>
@@ -44,10 +25,46 @@
                     <table class="table text-center justify-content-center">
                         <thead>
                             <tr>
+                                <th class="fw-bold text-white">
+                                    <form action="" method="get">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control form-control-sm" name="upi_search" placeholder="Search">
+                                        </div>
+                                    </form>
+                                </th>
+                                <th></th> 
+                                <th>
+                                    <select name="" id="" class="form-control form-control-sm fw-bold">
+                                        <option value="1">Credit</option>
+                                        <option value="0">Debit</option>
+                                        <option value="3" selected>No Filter</option>
+                                    </select>
+                                </th> 
+                                
+                                <th>
+                                    <form action="" method="get">
+                                        <div class="d-flex flex-column justify-content-center align-items-start">
+                                            <label for="" class="text-white">From</label>
+                                            <div class="input-group">
+                                                <input type="date" class="form-control form-control-sm" name="date_from">
+                                            </div>
+                                            <label for="" class="text-white">To</label>
+                                            <div class="input-group">
+                                                <input type="date" class="form-control form-control-sm" name="date_to">
+                                            </div>
+                                        </div>
+                                        
+                                    </form>
+
+                                </th>
+                                <th></th>
+                            </tr>
+                            <tr>
                                 @foreach($table_title as $title)
                                     <th class="fw-bold text-white">{{$title}}</th>
                                 @endforeach
                             </tr>
+                            
                         </thead>
                         <tbody>
                             @foreach($data as $d)
@@ -56,6 +73,9 @@
                                     <td class="text-white"> {{ $d->ammount }} </td>
                                     <td class="text-white"> {{ $d->iscredit == 1 ? 'Credit' : 'Debit' }} </td>
                                     <td class="text-white"> {{ $d->created_at }} </td>
+
+                                    <td class="text-white"> {{ $d->fname .' '. $d->mname . ' ' . $d->lname }} </td>
+
                                 </tr>
                             @endforeach
 
@@ -69,6 +89,7 @@
                         <div class="col">
                              <p class="fw-bold fs-7 opacity-7">Page {{ $current_page }} of {{ $count }}</p>
                         </div>
+                        
                         <div class="col-2">
                             <div class="container-fluid d-flex flex-row justify-content-between">
                                 <a class="text-white btn btn-outline-white" href="{{ route('transactions', ['page' => ($current_page-1) ]) }}">Prev</a>
