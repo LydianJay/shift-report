@@ -1,7 +1,16 @@
 
-function handleFile(route) {
+async function hashDetails(details) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(details);
+    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+    return Array.from(new Uint8Array(hashBuffer))
+        .map(b => b.toString(16).padStart(2, '0'))
+        .join('');
+}
+
+
+async function handleFile(route) {
     const input = document.getElementById("file");
-    
 
     if (!input.files.length) {
         alert("Please select a file");
@@ -11,69 +20,99 @@ function handleFile(route) {
     const file = input.files[0];
     const reader = new FileReader();
     const transactions = [];
-    console.log(route);
-    reader.onload = function (event) {
+    reader.onload = async function (event) {
         const lines = event.target.result.split("\n");
-        let upiRrn = null;
+        for (let i = 0; i < lines.length; i++) {
+            let line = lines[i];
+            
+            const dateMatches = line.match(/(\d{2}\/\d{2}\/\d{2})/g);
 
-        lines.forEach((line) => {
-            const upiMatch = line.match(/UPI\/RRN\s+(\d+)/);
-            if (upiMatch) {
-                upiRrn = upiMatch[1];
+
+            if(dateMatches) {
+                let splits  = line.split(/\s+/);
+                let upi_rrn = "N/A";
+                let debit   = 0;
+                let credit  = 0;
+                let ok = false;
+                if(splits[1].match(/(\d{2}\/\d{2}\/\d{2})/) && splits[2].match(/(\d{2}\/\d{2}\/\d{2})/)) {
+                    // console.log(splits);
+                    let l = i + 1;
+                    let max = l + 3;
+        
+                    do { 
+                        
+                        if(lines[l].match(/UPI\/RRN/g)) {
+                            upi_rrn = lines[l].split(/\s+/g)[2].split(/\//g)[0];
+                            credit  = parseFloat(splits[splits.length - 3].replace(/,/g, ""));
+                            ok = true;
+                            break;
+                        }
+
+                        else if(lines[l].match(/\d{10,12}/g)) {
+                            upi_rrn = lines[l].match(/\d{10,12}/g)[0];
+                            debit  = parseFloat(splits[splits.length - 3].replace(/,/g, ""));
+                            ok = true;
+                            break;
+                        }
+
+                        l++;
+                    } while(!lines[l].match(/(\d{2}\/\d{2}\/\d{2})/g) && !lines[l].match(/UPI\/RRN/g) && !lines[l].match(/\b\d{12}\b/) && l <= max);
+                    
+                }
+                if(ok) {
+                    transactions.push({ upi_rrn: upi_rrn, debit: debit, credit: credit });
+                }
             }
 
-            const creditMatch = line.match(/BY TRF\.\s+([\d,]+\.\d{2})/);
-            if (creditMatch && upiRrn) {
-                const creditAmount = creditMatch[1].replace(/,/g, ""); // Remove commas
-                transactions.push({ upi_rrn: upiRrn, amount: parseFloat(creditAmount) });
-                upiRrn = null; // Reset for the next transaction
-            }
-        });
-
-        console.log(transactions.length);
+            
+        }
         console.log(transactions);
-        sendInChunks(transactions, route);
+
+        // console.log(transactions.length);
+        // console.log(transactions);
+        // sendInChunks(transactions, route);
     };
 
     reader.readAsText(file);
+    
 }
 
-async function sendInChunks(data, route, chunkSize = 10 ) {
+// async function sendInChunks(data, route, chunkSize = 10 ) {
 
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+//     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-    let index = 0;
-    console.log('Sending chunks');
-    while(index < data.length) {
-        const chunk = data.slice(index, index + chunkSize);
-        try {
-            await fetch(route, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json",
-                    "X-CSRF-TOKEN": csrfToken
-                },
-                body: JSON.stringify({ transactions: chunk }) 
-            });
+//     let index = 0;
+//     console.log('Sending chunks');
+//     while(index < data.length) {
+//         const chunk = data.slice(index, index + chunkSize);
+//         try {
+//             await fetch(route, {
+//                 method: "POST",
+//                 headers: {
+//                     "Content-Type": "application/json",
+//                     "Accept": "application/json",
+//                     "X-CSRF-TOKEN": csrfToken
+//                 },
+//                 body: JSON.stringify({ transactions: chunk }) 
+//             });
 
 
-            index += chunkSize;
-            let progress = Math.round((index / data.length) * 100);
-            document.getElementById("progbar").style.width = `${progress}%`;
+//             index += chunkSize;
+//             let progress = Math.round((index / data.length) * 100);
+//             document.getElementById("progbar").style.width = `${progress}%`;
 
-            if(progress >= 100) {
-                let myModal = bootstrap.Modal.getInstance(document.getElementById('uploadmodal'));
-                myModal.hide();
-                alert(`Upload completed! ${data.length} transactions uploaded`);
-            }
+//             if(progress >= 100) {
+//                 let myModal = bootstrap.Modal.getInstance(document.getElementById('uploadmodal'));
+//                 myModal.hide();
+//                 alert(`Upload completed! ${data.length} transactions uploaded`);
+//             }
             
-        }
-        catch(err) {
-            console.error("Upload failed", err);
-            break;
-        }
-    }
+//         }
+//         catch(err) {
+//             console.error("Upload failed", err);
+//             break;
+//         }
+//     }
     
     
-}
+// }

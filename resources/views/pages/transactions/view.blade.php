@@ -70,8 +70,8 @@
                         </div>
                         <div class="col-2">
                             <div class="container-fluid d-flex flex-row justify-content-between">
-                                <button class="btn btn-outline-white"><span><a class="text-white" href="{{ route('transactions', ['page' => ($current_page-1) ]) }}">Prev</a></span> </button>
-                                <button class="btn btn-outline-white"><span><a class="text-white" href="{{ route('transactions', ['page' => ($current_page+1) ]) }}">Next</a></span></button>
+                                <a class="text-white btn btn-outline-white" href="{{ route('transactions', ['page' => ($current_page-1) ]) }}">Prev</a>
+                                <a class="text-white btn btn-outline-white" href="{{ route('transactions', ['page' => ($current_page+1) ]) }}">Next</a>
                             </div>
                         </div>
                     </div>
