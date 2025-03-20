@@ -78,7 +78,7 @@ async function handleFile(route) {
     
 }
 
-async function sendInChunks(data, route, chunkSize = 10 ) {
+async function sendInChunks(data, route, chunkSize = 20 ) {
 
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
@@ -103,6 +103,7 @@ async function sendInChunks(data, route, chunkSize = 10 ) {
             document.getElementById("progbar").style.width = `${progress}%`;
 
             if(progress >= 100) {
+                window.location.reload();
                 let myModal = bootstrap.Modal.getInstance(document.getElementById('uploadmodal'));
                 myModal.hide();
                 
