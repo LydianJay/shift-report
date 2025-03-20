@@ -2,8 +2,8 @@
 
 
     <div class="container-fluid">
-        <div class="card">
-            <div class="card-header px-5 border-bottom py-2 mb-0">
+        <div class="card bg-gray-700">
+            <div class="card-header bg-gray-700 px-5 border-bottom py-2 mb-0">
                 <p class="fs-4 fw-bold">Add Employee</p>
                 <div class="my-1 px-2">
                     @if ($errors->any())

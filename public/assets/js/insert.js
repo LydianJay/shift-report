@@ -68,10 +68,10 @@ async function handleFile(route) {
 
             
         }
-        console.log(transactions);
+        // console.log(transactions);
 
 
-        sendInChunks(transactions, route);
+        await sendInChunks(transactions, route);
     };
 
     reader.readAsText(file);
@@ -83,7 +83,7 @@ async function sendInChunks(data, route, chunkSize = 10 ) {
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
     let index = 0;
-    console.log('Sending chunks');
+    // console.log('Sending chunks');
     while(index < data.length) {
         const chunk = data.slice(index, index + chunkSize);
         try {
@@ -105,7 +105,7 @@ async function sendInChunks(data, route, chunkSize = 10 ) {
             if(progress >= 100) {
                 let myModal = bootstrap.Modal.getInstance(document.getElementById('uploadmodal'));
                 myModal.hide();
-                alert(`Upload completed! ${data.length} transactions uploaded`);
+                
             }
             
         }

@@ -132,14 +132,7 @@
             }
 
 
-            .card {
-                background-color: #063969 !important;
-            }
-
-            .card-header {
-                background-color: #063969 !important;
-                color: #fff !important;
-            }
+           
             p {
                 color: #fff !important;
             }

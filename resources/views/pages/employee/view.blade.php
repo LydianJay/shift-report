@@ -1,12 +1,12 @@
 <x-basedashboard active_link="{{$active_link}}">
     <div class="container-fluid">
         
-        <div class="card">
+        <div class="card bg-gray-700">
            
             
 
 
-            <div class="card-header border-3 border-white border-bottom mx-2 px-0" style="--bs-border-opacity: .5;">
+            <div class="card-header bg-gray-700 border-3 border-white border-bottom mx-2 px-0" style="--bs-border-opacity: .5;">
                 <div class="container-fluid d-flex flex-row justify-content-between align-items-center">
                     <p class="fw-bold fs-3">Employees</p>
                 
