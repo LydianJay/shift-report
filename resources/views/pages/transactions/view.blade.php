@@ -1,7 +1,7 @@
 <x-basedashboard active_link="{{$active_link}}">
         <script src="{{ asset('assets/js/insert.js') }}"> </script>
 
-        <div class="card bg-gray-700">
+        <div class="card bg-gray-700 mx-2">
            
             <div class="card-header bg-gray-700 border-3 border-white border-bottom mx-2 px-0" style="--bs-border-opacity: .5;">
                 <div class="container-fluid d-flex flex-row justify-content-between align-items-center">
@@ -25,24 +25,24 @@
                     <table class="table text-center justify-content-center">
                         <thead>
                             <tr>
-                                <th class="fw-bold text-white">
-                                    <form action="" method="get">
+                                <form action="" method="get">
+
+
+                                    <th class="fw-bold text-white">
                                         <div class="input-group">
                                             <input type="text" class="form-control form-control-sm" name="upi_search" placeholder="Search">
                                         </div>
-                                    </form>
-                                </th>
-                                <th></th> 
-                                <th>
-                                    <select name="" id="" class="form-control form-control-sm fw-bold">
-                                        <option value="1">Credit</option>
-                                        <option value="0">Debit</option>
-                                        <option value="3" selected>No Filter</option>
-                                    </select>
-                                </th> 
-                                
-                                <th>
-                                    <form action="" method="get">
+                                    </th>
+                                    <th></th> 
+                                    <th>
+                                        <select name="" id="" class="form-control form-control-sm fw-bold">
+                                            <option value="1">Credit</option>
+                                            <option value="0">Debit</option>
+                                            <option value="3" selected>No Filter</option>
+                                        </select>
+                                    </th> 
+                                    
+                                    <th>
                                         <div class="d-flex flex-column justify-content-center align-items-start">
                                             <label for="" class="text-white">From</label>
                                             <div class="input-group">
@@ -52,13 +52,21 @@
                                             <div class="input-group">
                                                 <input type="date" class="form-control form-control-sm" name="date_to">
                                             </div>
+                                            
                                         </div>
-                                        
-                                    </form>
+                                            
+                                    </th>
 
-                                </th>
-                                <th></th>
+
+                                    <th>
+                                        <button type="submit" class="btn-sm btn btn-primary">Filter</button>
+                                    </th>
+                                </form>
+
                             </tr>
+
+
+
                             <tr>
                                 @foreach($table_title as $title)
                                     <th class="fw-bold text-white">{{$title}}</th>
