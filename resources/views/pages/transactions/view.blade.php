@@ -35,10 +35,12 @@
                                     </th>
                                     <th></th> 
                                     <th>
-                                        <select name="" id="" class="form-control form-control-sm fw-bold">
-                                            <option value="1">Credit</option>
-                                            <option value="0">Debit</option>
-                                            <option value="3" selected>No Filter</option>
+                                        <select name="type" id="" class="form-control form-control-sm fw-bold">
+                                            @foreach ($select as $key => $value)
+                                                <option value="{{$key}}" @if(isset($filter['type']) && $filter['type'] === $key) {{ 'selected' }} @endif>{{$value}}</option>
+                                            @endforeach
+
+                                            
                                         </select>
                                     </th> 
                                     
@@ -78,12 +80,7 @@
                             @foreach($data as $d)
                                 <tr class="{{ $d->iscredit == 1 ? 'bg-primary' : 'bg-secondary' }} border">
                                     <td class="text-white"> {{ $d->upi_rrn }} </td>
-                                    <td class="text-white"> 
-                                        <script>
-                                            var val = {{ $d->ammount }};
-                                            document.write( val.toLocaleString() ) 
-                                        </script> INR 
-                                    </td>
+                                    <td class="text-white">&#x20B9 {{ number_format($d->ammount, 2) }}</td>
                                     <td class="text-white"> {{ $d->iscredit == 1 ? 'Credit' : 'Debit' }} </td>
                                     <td class="text-white"> {{ $d->created_at }} </td>
 
@@ -112,8 +109,8 @@
                         </div>
                         <div class="col">
                             <div class="container-fluid d-flex flex-row justify-content-end @if($count <= 0) {{ 'd-none' }}  @endif">
-                                <a class="text-white btn btn-outline-white mx-2 @if($current_page <= 1)  {{ 'disabled' }} @endif" href="{{ route('transactions', ['page' => ($current_page-1) ]) }}">Prev</a>
-                                <a class="text-white btn btn-outline-white mx-2 @if($current_page >= $count)  {{ 'disabled' }} @endif" href="{{ route('transactions', ['page' => ($current_page+1) ]) }}">Next</a>
+                                <a class="text-white btn btn-outline-white mx-2 @if($current_page <= 1)  {{ 'disabled' }} @endif" href="{{ route('transactions', array_merge(request()->query(), ['page' => $current_page - 1]) ) }}">Prev</a>
+                                <a class="text-white btn btn-outline-white mx-2 @if($current_page >= $count)  {{ 'disabled' }} @endif" href="{{ route('transactions', array_merge(request()->query(), ['page' => $current_page + 1]) ) }}">Next</a>
                             </div>
                         </div>
                     </div>

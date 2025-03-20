@@ -22,21 +22,51 @@ class TransactionsController extends Controller
         $count          = TransactionModel::count();
         $currentPage    = 1;
 
+        $getRequest     = request()->all();
+
         if($page == null) {
-            // $data = TransactionModel::limit($limit)->get();
+
+            
+
             $data = TransactionModel::join('employee', 'transactions.upload_by', '=', 'employee.id')
-                ->select('transactions.*', 'employee.fname as fname', 'employee.lname as lname', 'employee.mname as mname')
-                ->limit($limit)
-                ->get();
+                ->select('transactions.*', 'employee.fname as fname', 'employee.lname as lname', 'employee.mname as mname');
+
+            if(isset($getRequest['search']) && $getRequest['search'] != '') {
+                $data = $data->where('upi_rrn', 'like', '%'.$getRequest['search'].'%');
+            }
+
+            if(isset($getRequest['type']) && $getRequest['type'] != '') {
+                $data = $data->where('iscredit', $getRequest['type']);
+            }
+
+            if(isset($getRequest['from']) && $getRequest['from'] != '' && isset($getRequest['to']) && $getRequest['to'] != '') {
+                $data = $data->whereDate('created_at', '>=', $getRequest['from'])->whereDate('created_at', '<=', $getRequest['to']);
+            }
+            
+
+            $data = $data->limit($limit)->get();
         }
         else {
-            // $data = TransactionModel::limit($limit)->offset($page * $limit)->get();
+
+
             $data = TransactionModel::join('employee', 'transactions.upload_by', '=', 'employee.id')
-                ->select('transactions.*', 'employee.fname as fname', 'employee.lname as lname', 'employee.mname as mname')
-                ->limit($limit)
-                ->offset($page * $limit)
-                ->get();
+                ->select('transactions.*', 'employee.fname as fname', 'employee.lname as lname', 'employee.mname as mname');
+
+            if (isset($getRequest['search']) && $getRequest['search'] != '') {
+                $data = $data->where('upi_rrn', 'like', '%' . $getRequest['search'] . '%');
+            }
+
+            if (isset($getRequest['type']) && $getRequest['type'] != '') {
+                $data = $data->where('iscredit', $getRequest['type']);
+            }
+
+            if (isset($getRequest['from']) && $getRequest['from'] != '' && isset($getRequest['to']) && $getRequest['to'] != '') {
+                $data = $data->whereDate('created_at', '>=', $getRequest['from'])->whereDate('created_at', '<=', $getRequest['to']);
+            }
+
             $currentPage = $page;
+
+            $data = $data->limit($limit)->offset($page * $limit)->get();
         }
 
         return view('pages.transactions.view', 
@@ -46,6 +76,12 @@ class TransactionsController extends Controller
                 'data'          => $data,
                 'current_page'  => $currentPage,
                 'count'         => $count,
+                'filter'        => $getRequest,
+                'select'        => [
+                    '1' => 'Credit',
+                    '0' => 'Debit',
+                    '3' => 'All'
+                ]
             ]
         );
     }

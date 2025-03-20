@@ -44,7 +44,13 @@
                
                <div class="card-body">
                     <p class="fs-5 fw-bold  opacity-7">Ammount</p>
-                    <p class="fs-5 opacity-10"> <script>document.write({{ $data['ammount'] }}.toLocaleString())</script> INR</p>
+                    <p class="fs-5 opacity-10"> 
+                        &#x20B9
+                        <script>
+                            let ammount = @json($data['ammount']);
+                            document.write(ammount.toLocaleString());
+                        </script>
+                    </p>
                </div>
             </div>
 
