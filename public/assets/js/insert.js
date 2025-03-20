@@ -1,14 +1,4 @@
 
-async function hashDetails(details) {
-    const encoder = new TextEncoder();
-    const data = encoder.encode(details);
-    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-    return Array.from(new Uint8Array(hashBuffer))
-        .map(b => b.toString(16).padStart(2, '0'))
-        .join('');
-}
-
-
 async function handleFile(route) {
     const input = document.getElementById("file");
     const userid = document.querySelector('meta[name="user_id"]').getAttribute('content');
@@ -34,8 +24,9 @@ async function handleFile(route) {
                 let ammount = 0;
                 let iscredit = 0;
                 let ok = false;
+                let hashed = SparkMD5.hash(line);
                 if(splits[1].match(/(\d{2}\/\d{2}\/\d{2})/) && splits[2].match(/(\d{2}\/\d{2}\/\d{2})/)) {
-                    // console.log(splits);
+                    // console.log(SparkMD5.hash(line));
                     let l = i + 1;
                     let max = l + 3;
         
@@ -62,7 +53,7 @@ async function handleFile(route) {
                     
                 }
                 if(ok) {
-                    transactions.push({ upi_rrn: upi_rrn, ammount: ammount, iscredit: iscredit, upload_by: userid });
+                    transactions.push({ upi_rrn: upi_rrn, ammount: ammount, iscredit: iscredit, upload_by: userid, hash: hashed });
                 }
             }
 
@@ -78,7 +69,7 @@ async function handleFile(route) {
     
 }
 
-async function sendInChunks(data, route, chunkSize = 20 ) {
+async function sendInChunks(data, route, chunkSize = 10 ) {
 
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
@@ -87,7 +78,7 @@ async function sendInChunks(data, route, chunkSize = 20 ) {
     while(index < data.length) {
         const chunk = data.slice(index, index + chunkSize);
         try {
-            await fetch(route, {
+            let result = await fetch(route, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -102,10 +93,11 @@ async function sendInChunks(data, route, chunkSize = 20 ) {
             let progress = Math.round((index / data.length) * 100);
             document.getElementById("progbar").style.width = `${progress}%`;
 
+            console.log(result);
             if(progress >= 100) {
-                window.location.reload();
                 let myModal = bootstrap.Modal.getInstance(document.getElementById('uploadmodal'));
                 myModal.hide();
+                window.location.reload();
                 
             }
             

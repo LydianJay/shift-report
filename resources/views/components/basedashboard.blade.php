@@ -32,11 +32,13 @@
         <!-- Nucleo Icons -->
         <link href="{{ asset('vendor/creative-tim/css/nucleo-icons.css') }}" rel="stylesheet" />
         <link href="{{ asset('vendor/creative-tim/css/nucleo-svg.css') }}" rel="stylesheet" />
-        <!-- Font Awesome Icons -->
-        <script src="https://kit.fontawesome.com/349ee9c857.js" crossorigin="anonymous"></script>
+
         <link href="{{ 'vendor/creative-tim/css/nucleo-svg.css' }}" rel="stylesheet" />
         <!-- CSS Files -->
         <link id="pagestyle" href="{{ asset('vendor/creative-tim/css/corporate-ui-dashboard.css?v=1.0.0') }}" rel="stylesheet" />
+
+        {{-- md5 --}}
+        <script src="https://cdn.jsdelivr.net/npm/spark-md5@3.0.2/spark-md5.min.js"></script>
 
         <!-- Icons -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -48,7 +50,6 @@
         <script src="{{ asset('vendor/creative-tim/js/plugins/chartjs.min.js') }}"></script>
         <script src="{{ asset('vendor/creative-tim/js/plugins/swiper-bundle.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('vendor/creative-tim/js/corporate-ui-dashboard.min.js?v=1.0.0') }}"></script>
-       
         <style>
 
             :root {

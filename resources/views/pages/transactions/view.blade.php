@@ -70,7 +70,12 @@
                             @foreach($data as $d)
                                 <tr class="{{ $d->iscredit == 1 ? 'bg-primary' : 'bg-secondary' }} border">
                                     <td class="text-white"> {{ $d->upi_rrn }} </td>
-                                    <td class="text-white"> {{ $d->ammount }} </td>
+                                    <td class="text-white"> 
+                                        <script>
+                                            var val = {{ $d->ammount }};
+                                            document.write( val.toLocaleString() ) 
+                                        </script> INR 
+                                    </td>
                                     <td class="text-white"> {{ $d->iscredit == 1 ? 'Credit' : 'Debit' }} </td>
                                     <td class="text-white"> {{ $d->created_at }} </td>
 
@@ -85,18 +90,27 @@
             </div>
             <div class="card-footer border-top border-3 border-white">
                 <div class="container-fluid">
+
                     <div class="row">
-                        <div class="col">
-                             <p class="fw-bold fs-7 opacity-7">Page {{ $current_page }} of {{ $count }}</p>
+                        <div class="col ">
+                             <p class="fw-bold fs-7 opacity-7 @if($count <= 0) {{ 'd-none' }}  @endif">Page {{ $current_page }} of {{ $count }}</p>
                         </div>
-                        
-                        <div class="col-2">
-                            <div class="container-fluid d-flex flex-row justify-content-between">
-                                <a class="text-white btn btn-outline-white" href="{{ route('transactions', ['page' => ($current_page-1) ]) }}">Prev</a>
-                                <a class="text-white btn btn-outline-white" href="{{ route('transactions', ['page' => ($current_page+1) ]) }}">Next</a>
+                        <div class="col">
+                            <div class="container-fluid d-flex flex-row justify-content-center @if($count <= 0 || $current_page < 4) {{ 'd-none' }}  @endif">
+                                @for($i = $current_page - 3; $i <= $current_page+3; $i++)
+                                    <a href="{{ route('transactions', ['page' => ($i) ]) }}" class=" btn btn-sm @if($i == $current_page) {{ 'btn-white text-dark opacity-7' }} @else {{ 'btn-outline-white text-white'}} @endif mx-1">{{$i}}</a>
+                                @endfor
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="container-fluid d-flex flex-row justify-content-end @if($count <= 0) {{ 'd-none' }}  @endif">
+                                <a class="text-white btn btn-outline-white mx-2 @if($current_page <= 1)  {{ 'disabled' }} @endif" href="{{ route('transactions', ['page' => ($current_page-1) ]) }}">Prev</a>
+                                <a class="text-white btn btn-outline-white mx-2 @if($current_page >= $count)  {{ 'disabled' }} @endif" href="{{ route('transactions', ['page' => ($current_page+1) ]) }}">Next</a>
                             </div>
                         </div>
                     </div>
+
+                    
                     
                 </div>
             </div>

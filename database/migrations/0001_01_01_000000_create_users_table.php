@@ -54,7 +54,7 @@ return new class extends Migration
             $table->tinyInteger('iscredit')->default(1);
             $table->unsignedBigInteger('upload_by')->nullable();
             $table->timestamp('created_at')->useCurrent();
-            
+            $table->string('hash')->unique();
             $table->foreign('upload_by')->references('id')->on('employee');
         });
 
