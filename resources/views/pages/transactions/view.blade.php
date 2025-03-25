@@ -196,4 +196,25 @@
     </div>
 
 
+
+    {{-- JS Error Message --}}
+
+    <div class="modal fade" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" id="js_error" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-danger">Upload Failed - Possible Duplicate</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="progress">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    {{-- END --}}
+
 </x-basedashboard>

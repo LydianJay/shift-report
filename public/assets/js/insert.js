@@ -62,7 +62,19 @@ async function handleFile(route) {
         // console.log(transactions);
 
 
-        await sendInChunks(transactions, route);
+        let progress = await sendInChunks(transactions, route);
+        if(progress == 'failed') {
+            let errorModal = bootstrap.Modal.getInstance(document.getElementById('uploadmodal'));
+            errorModal.show();
+        }
+        else {
+
+            if(progress >= 100) {
+                let myModal = bootstrap.Modal.getInstance(document.getElementById('uploadmodal'));
+                myModal.hide();
+                window.location.reload();
+            }
+        }
     };
 
     reader.readAsText(file);
@@ -86,25 +98,26 @@ async function sendInChunks(data, route, chunkSize = 10 ) {
                     "X-CSRF-TOKEN": csrfToken
                 },
                 body: JSON.stringify({ transactions: chunk }) 
+            }).catch(err => {
+                console.error("Upload failed", err);
+                return 'failed';
             });
 
+            console.log("Response Status:", response.status);
+            if(!result.ok) {
+                return 'failed';
+            }
 
             index += chunkSize;
             let progress = Math.round((index / data.length) * 100);
             document.getElementById("progbar").style.width = `${progress}%`;
 
-            console.log(result);
-            if(progress >= 100) {
-                let myModal = bootstrap.Modal.getInstance(document.getElementById('uploadmodal'));
-                myModal.hide();
-                window.location.reload();
-                
-            }
             
+
+            return progress;
         }
         catch(err) {
-            console.error("Upload failed", err);
-            break;
+            return 'failed';
         }
     }
     
