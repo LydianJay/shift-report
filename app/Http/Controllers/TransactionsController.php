@@ -35,7 +35,7 @@ class TransactionsController extends Controller
                 $data = $data->where('upi_rrn', 'like', '%'.$getRequest['search'].'%');
             }
 
-            if(isset($getRequest['type']) && $getRequest['type'] != '') {
+            if(isset($getRequest['type']) && $getRequest['type'] != ''  && $getRequest['type'] != 3) {
                 $data = $data->where('iscredit', $getRequest['type']);
             }
 
@@ -56,7 +56,7 @@ class TransactionsController extends Controller
                 $data = $data->where('upi_rrn', 'like', '%' . $getRequest['search'] . '%');
             }
 
-            if (isset($getRequest['type']) && $getRequest['type'] != '') {
+            if (isset($getRequest['type']) && $getRequest['type'] != '' && $getRequest['type'] != 3) {
                 $data = $data->where('iscredit', $getRequest['type']);
             }
 

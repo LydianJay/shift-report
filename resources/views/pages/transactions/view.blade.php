@@ -36,11 +36,11 @@
                                     <th></th> 
                                     <th>
                                         <select name="type" id="" class="form-control form-control-sm fw-bold">
+                                            
                                             @foreach ($select as $key => $value)
-                                                <option value="{{$key}}" @if(isset($filter['type']) && $filter['type'] === $key) {{ 'selected' }} @endif>{{$value}}</option>
+                                                <option value="{{$key}}" @if(isset($filter['type']) && $filter['type'] == $key) {{ 'selected' }} @endif>{{$value}}</option>
                                             @endforeach
 
-                                            
                                         </select>
                                     </th> 
                                     
@@ -48,11 +48,19 @@
                                         <div class="d-flex flex-column justify-content-center align-items-start">
                                             <label for="" class="text-white">From</label>
                                             <div class="input-group">
-                                                <input type="date" class="form-control form-control-sm" name="date_from">
+                                                @if (isset($filter['from']))
+                                                    <input type="date" class="form-control form-control-sm" name="from" value="{{ date('Y-m-d', strtotime($filter['from']) ) }}">
+                                                @else
+                                                    <input type="date" class="form-control form-control-sm" name="from">
+                                                @endif
                                             </div>
                                             <label for="" class="text-white">To</label>
                                             <div class="input-group">
-                                                <input type="date" class="form-control form-control-sm" name="date_to">
+                                                @if (isset($filter['to']))
+                                                    <input type="date" class="form-control form-control-sm" name="to" value="{{ date('Y-m-d', strtotime($filter['to']) ) }}">
+                                                @else
+                                                    <input type="date" class="form-control form-control-sm" name="to">
+                                                @endif
                                             </div>
                                             
                                         </div>
