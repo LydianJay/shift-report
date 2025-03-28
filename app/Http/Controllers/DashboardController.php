@@ -32,7 +32,8 @@ class DashboardController extends Controller
             'credit'        => TransactionModel::where('iscredit', '1')->whereDate('created_at', Carbon::today())->count(),
             'debit'         => TransactionModel::where('iscredit', '0')->whereDate('created_at', Carbon::today())->count(),
             'ammount'       => TransactionModel::whereDate('created_at', Carbon::today())->sum('ammount'),
-            'table'         => $table
+            'table'         => $table,
+            'today'         => date('r'),
         ];
         
         return view('pages.dashboard', ['active_link' => 'dashboard', 'data' => $data]);
