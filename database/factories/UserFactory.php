@@ -51,4 +51,19 @@ class UserFactory extends Factory
             'password' => Hash::make($pass),
         ]);
     }
+
+
+    public function createDefault()
+    {
+        return $this->state([
+            'fname' => 'LC-BPO',
+            'mname' => ' ',
+            'lname' => ' ',
+            'dob' => now(),
+            'email' => 'lcbpo@gmail.com',
+            'contactno' => '09123456789',
+            'position' => config('positions')[0],
+            'password' => Hash::make('admin123'),
+        ]);
+    }
 }

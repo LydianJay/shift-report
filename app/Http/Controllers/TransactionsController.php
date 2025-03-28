@@ -24,7 +24,7 @@ class TransactionsController extends Controller
 
         $getRequest     = request()->all();
 
-        if($page == null) {
+        if($page == null || $page == 1) {
 
             
 
@@ -32,7 +32,11 @@ class TransactionsController extends Controller
                 ->select('transactions.*', 'employee.fname as fname', 'employee.lname as lname', 'employee.mname as mname');
 
             if(isset($getRequest['search']) && $getRequest['search'] != '') {
-                $data = $data->where('upi_rrn', 'like', '%'.$getRequest['search'].'%');
+                $data = $data->where('upi_rrn', (int)$getRequest['search']);
+            }
+
+            if(isset($getRequest['ammount']) && $getRequest['ammount'] != '') {
+                $data = $data->where('ammount', (int)$getRequest['ammount']);
             }
 
             if(isset($getRequest['type']) && $getRequest['type'] != ''  && $getRequest['type'] != 3) {
@@ -43,8 +47,9 @@ class TransactionsController extends Controller
                 $data = $data->whereDate('created_at', '>=', $getRequest['from'])->whereDate('created_at', '<=', $getRequest['to']);
             }
             
-
-            $data = $data->limit($limit)->get();
+            $count      = $data->count();
+            $pageCount  = floor($count / $limit);
+            $data       = $data->limit($limit)->get();
         }
         else {
 
@@ -53,7 +58,11 @@ class TransactionsController extends Controller
                 ->select('transactions.*', 'employee.fname as fname', 'employee.lname as lname', 'employee.mname as mname');
 
             if (isset($getRequest['search']) && $getRequest['search'] != '') {
-                $data = $data->where('upi_rrn', 'like', '%' . $getRequest['search'] . '%');
+                $data = $data->where('upi_rrn', (int)$getRequest['search']);
+            }
+
+            if (isset($getRequest['ammount']) && $getRequest['ammount'] != '') {
+                $data = $data->where('ammount', (int)$getRequest['ammount']);
             }
 
             if (isset($getRequest['type']) && $getRequest['type'] != '' && $getRequest['type'] != 3) {
@@ -64,9 +73,11 @@ class TransactionsController extends Controller
                 $data = $data->whereDate('created_at', '>=', $getRequest['from'])->whereDate('created_at', '<=', $getRequest['to']);
             }
 
-            $currentPage = $page;
-
-            $data = $data->limit($limit)->offset($page * $limit)->get();
+            $currentPage    = $page;
+            $count          = $data->count();
+            $pageCount      = floor($count / $limit);
+            $data           = $data->limit($limit)->offset($page * $limit)->get();
+            
         }
 
         return view('pages.transactions.view', 
@@ -77,10 +88,10 @@ class TransactionsController extends Controller
                 'current_page'  => $currentPage,
                 'count'         => $count,
                 'filter'        => $getRequest,
+                'page_count'    => $pageCount,
                 'select'        => [
                     '1' => 'Credit',
                     '0' => 'Debit',
-                    '3' => 'All'
                 ]
             ]
         );

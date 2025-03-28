@@ -10,7 +10,7 @@
                 <div class="container-fluid d-flex flex-column justify-content-start">
                     <div class="row">
                         <div class="col-4">
-                            <label class="text-white opacity-8 me-1 my-0">Bank file statement <span class="opacity-5 ms-5">max size 64MB</span></label>
+                            <label class="text-white opacity-8 me-1 my-0">Bank file statement <span class="opacity-5 ms-5">.txt, .xls</span></label>
                             <div class="input-group m-0 p-0  align-items-center">
                                 <input type="file" name="file" id="file" class="form-control">
                                 <button type="button" class="btn btn-primary m-0" data-bs-toggle="modal" data-bs-target="#uploadmodal" onclick="handleFile('{{ route('transactions_upload') }}' )"><span> <i class="bi bi-upload ms-1 me-2"></i> </span>Upload</button>
@@ -30,13 +30,18 @@
 
                                     <th class="fw-bold text-white">
                                         <div class="input-group">
-                                            <input type="text" class="form-control form-control-sm" name="upi_search" placeholder="Search">
+                                            <input type="number" class="form-control form-control-sm" name="search" placeholder="Search">
                                         </div>
                                     </th>
-                                    <th></th> 
+                                    <th class="px-0">
+                                        <div class="input-group w-50 mx-auto">
+                                            <input type="number" class="form-control form-control-sm" name="ammount">
+                                        </div>
+                                    </th> 
                                     <th>
                                         <select name="type" id="" class="form-control form-control-sm fw-bold">
-                                            
+                                            <option value="3" selected>All</option>
+             
                                             @foreach ($select as $key => $value)
                                                 <option value="{{$key}}" @if(isset($filter['type']) && $filter['type'] == $key) {{ 'selected' }} @endif>{{$value}}</option>
                                             @endforeach
@@ -106,19 +111,19 @@
 
                     <div class="row">
                         <div class="col ">
-                             <p class="fw-bold fs-7 opacity-7 @if($count <= 0) {{ 'd-none' }}  @endif">Page {{ $current_page }} of {{ $count }}</p>
+                             <p class="fw-bold fs-7 opacity-7 @if($page_count <= 0) {{ 'd-none' }}  @endif">Page {{ $current_page }} of {{ $page_count }}</p>
                         </div>
                         <div class="col">
-                            <div class="container-fluid d-flex flex-row justify-content-center @if($count <= 0 || $current_page < 4) {{ 'd-none' }}  @endif">
+                            <div class="container-fluid d-flex flex-row justify-content-center @if($page_count <= 0 || $current_page < 4) {{ 'd-none' }}  @endif">
                                 @for($i = $current_page - 3; $i <= $current_page+3; $i++)
                                     <a href="{{ route('transactions', ['page' => ($i) ]) }}" class=" btn btn-sm @if($i == $current_page) {{ 'btn-white text-dark opacity-7' }} @else {{ 'btn-outline-white text-white'}} @endif mx-1">{{$i}}</a>
                                 @endfor
                             </div>
                         </div>
                         <div class="col">
-                            <div class="container-fluid d-flex flex-row justify-content-end @if($count <= 0) {{ 'd-none' }}  @endif">
+                            <div class="container-fluid d-flex flex-row justify-content-end @if($page_count <= 0) {{ 'd-none' }}  @endif">
                                 <a class="text-white btn btn-outline-white mx-2 @if($current_page <= 1)  {{ 'disabled' }} @endif" href="{{ route('transactions', array_merge(request()->query(), ['page' => $current_page - 1]) ) }}">Prev</a>
-                                <a class="text-white btn btn-outline-white mx-2 @if($current_page >= $count)  {{ 'disabled' }} @endif" href="{{ route('transactions', array_merge(request()->query(), ['page' => $current_page + 1]) ) }}">Next</a>
+                                <a class="text-white btn btn-outline-white mx-2 @if($current_page >= $page_count)  {{ 'disabled' }} @endif" href="{{ route('transactions', array_merge(request()->query(), ['page' => $current_page + 1]) ) }}">Next</a>
                             </div>
                         </div>
                     </div>
