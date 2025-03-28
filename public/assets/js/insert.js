@@ -192,7 +192,7 @@ async function handleFile(route) {
 
 }
 
-async function sendInChunks(data, route, chunkSize = 10 ) {
+async function sendInChunks(data, route, chunkSize = 1 ) {
 
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 

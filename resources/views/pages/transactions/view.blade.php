@@ -30,12 +30,12 @@
 
                                     <th class="fw-bold text-white">
                                         <div class="input-group">
-                                            <input type="number" class="form-control form-control-sm" name="search" placeholder="Search">
+                                            <input type="number" class="form-control form-control-sm" name="search" placeholder="Search" value="{{ isset($filter['search']) ? $filter['search'] : '' }}">
                                         </div>
                                     </th>
                                     <th class="px-0">
                                         <div class="input-group w-50 mx-auto">
-                                            <input type="number" class="form-control form-control-sm" name="ammount">
+                                            <input type="number" class="form-control form-control-sm" name="ammount" value="{{ isset($filter['ammount']) ? $filter['ammount'] : '' }}">
                                         </div>
                                     </th> 
                                     <th>
@@ -74,7 +74,8 @@
 
 
                                     <th>
-                                        <button type="submit" class="btn-sm btn btn-primary">Filter</button>
+                                        <button type="submit" class="btn-sm btn btn-primary mx-1">Filter</button>
+                                        <a type="button" class="btn-sm btn btn-secondary mx-1" href=" {{ route('transactions') }} ">Clear</a>
                                     </th>
                                 </form>
 
@@ -114,8 +115,10 @@
                              <p class="fw-bold fs-7 opacity-7 @if($page_count <= 0) {{ 'd-none' }}  @endif">Page {{ $current_page }} of {{ $page_count }}</p>
                         </div>
                         <div class="col">
-                            <div class="container-fluid d-flex flex-row justify-content-center @if($page_count <= 0 || $current_page < 4) {{ 'd-none' }}  @endif">
-                                @for($i = $current_page - 3; $i <= $current_page+3; $i++)
+                            <div class="container-fluid d-flex flex-row justify-content-center">
+                                @for($i = $current_page - 3; $i <= ($current_page+3) ; $i++)
+                                    @if($i <= 0 || $i > $page_count) @continue @endif
+                                    
                                     <a href="{{ route('transactions', ['page' => ($i) ]) }}" class=" btn btn-sm @if($i == $current_page) {{ 'btn-white text-dark opacity-7' }} @else {{ 'btn-outline-white text-white'}} @endif mx-1">{{$i}}</a>
                                 @endfor
                             </div>

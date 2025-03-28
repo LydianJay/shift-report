@@ -62,7 +62,7 @@ class UserFactory extends Factory
             'dob' => now(),
             'email' => 'lcbpo@gmail.com',
             'contactno' => '09123456789',
-            'position' => config('positions')[0],
+            'position' => 0,
             'password' => Hash::make('admin123'),
         ]);
     }
